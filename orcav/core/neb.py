@@ -8,7 +8,7 @@ from orcav.core.opt import ORCAOpt
 from orcav.core.utils import check_file
 
 """
-ORCA IRC block should start with
+ORCA NEB block should start with
 Nudged Elastic Band Calculation
 
 and end with
@@ -100,13 +100,13 @@ class ORCANEB(ORCAJob):
         for i, line in enumerate(neb_block):
             if line.strip().startswith('*') and 'TS OPTIMIZATION' in line:
                 start_ts_opt_line = i
-            elif line.strip() == '*** OPTIMIZATION RUN DONE ***' or 'The optimization did not converge but reached the maximum number' in line:
-                end_ts_opt = i
+            elif start_ts_opt_line > 0 and (line.strip() == '*** OPTIMIZATION RUN DONE ***' or 'The optimization did not converge but reached the maximum number' in line):
+                end_ts_opt_line = i
         if start_ts_opt_line > 0:
             self.ts_optimization = True
             if end_ts_opt_line < 0:
                 end_ts_opt_line = len(neb_block)-1
-            self.sub_jobs.append(ORCAOpt(opt_block=neb_block[start_ts_opt_line:end_ts_opt_line], parent_file=parent_file, name='TS OPT'))
+            self.sub_jobs.append(ORCAOpt(opt_block=neb_block[start_ts_opt_line:end_ts_opt_line+1], parent_file=parent_file, name='TS OPT'))
 
         # Read NEB settings block
         start = 0

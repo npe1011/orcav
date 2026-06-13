@@ -148,6 +148,9 @@ class ORCAFreq(ORCAJob):
         # weight: move move_matrix * weight in each step
         move_matrix = self.freq_matrix_list[normal_mode]
         max_vector_size = np.sqrt(np.max(np.sum(move_matrix * move_matrix, axis=1)))
+        if max_vector_size == 0:
+            # Zero displacement mode (translational/rotational), nothing to animate
+            return
         weight = max_shift / (max_vector_size * step)
 
         init_coordinate = self.init_structure.get_coordinates_np()

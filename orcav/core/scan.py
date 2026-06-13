@@ -99,7 +99,7 @@ class ORCAScan(ORCAJob):
                 params.append(Decimal(line.strip().strip('*').strip().split(':')[1].strip()))
             self.parameters_list.append(params)
             # Extract final structure and energy
-            current_energy = Decimal('0')
+            current_energy = None
             current_structure_line = -1
             for i, line in enumerate(block):
                 if line.startswith('CARTESIAN COORDINATES (ANGSTROEM)'):

@@ -34,7 +34,7 @@ class ORCAResult:
         self.total_run_time: str = ""
 
         # Parse log data for extract basic information
-        with self.log_file.open() as f:
+        with self.log_file.open(encoding='utf-8', errors='replace') as f:
             self.log_data = f.readlines()
         for i, line in enumerate(self.log_data):
             if '****ORCA TERMINATED NORMALLY****' in line:

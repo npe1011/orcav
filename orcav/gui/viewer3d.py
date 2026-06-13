@@ -220,7 +220,7 @@ class Viewer3D(QWidget):
         self.web_view = QWebEngineView()
         self.web_page = CustomWebPage()
         self.web_view.setPage(self.web_page)
-        self.web_view.settings().setAttribute(QWebEngineSettings.WebAttribute.LocalContentCanAccessRemoteUrls, True)
+        self.web_view.settings().setAttribute(QWebEngineSettings.WebAttribute.LocalContentCanAccessRemoteUrls, False)
         self.web_view.settings().setAttribute(QWebEngineSettings.WebAttribute.LocalContentCanAccessFileUrls, True)
         self.layout.addWidget(self.web_view)
         
@@ -242,6 +242,9 @@ class Viewer3D(QWidget):
         self.web_view.setHtml(html)
 
     def _on_load_finished(self, ok):
+        if not ok:
+            print("Warning: WebEngine page failed to load")
+            return
         self.is_loaded = True
         if self.pending_structure:
             self.load_structure(self.pending_structure)
@@ -291,11 +294,11 @@ class Viewer3D(QWidget):
             return
         self.current_anim_job = None
         self.current_anim_mode = None
+        import json
         xyz_data = structure.get_string()
         # Add number of atoms and title to make it standard XYZ
         xyz_str = f"{structure.num_atom}\n\n{xyz_data}"
-        # Escape newlines and quotes for JS string
-        xyz_str = xyz_str.replace('\n', '\\n').replace('"', '\\"')
+        xyz_json = json.dumps(xyz_str)
         
         js = f"""
         if(viewer) {{
@@ -304,7 +307,7 @@ class Viewer3D(QWidget):
             }}
             viewer.clear();
         }}
-        loadXYZ("{xyz_str}");
+        loadXYZ({xyz_json});
         """
         self.web_view.page().runJavaScript(js)
         # re-apply label state
@@ -328,14 +331,15 @@ class Viewer3D(QWidget):
         finally:
             os.remove(temp_path)
             
-        anim_str = anim_data.replace('\n', '\\n').replace('"', '\\"')
+        import json
+        anim_json = json.dumps(anim_data)
         js = f"""
         if (viewer) {{
             if(viewer.isAnimated()) {{
                 viewer.stopAnimate();
             }}
             viewer.clear();
-            viewer.addModelsAsFrames("{anim_str}", "xyz");
+            viewer.addModelsAsFrames({anim_json}, "xyz");
             viewer.setStyle({{}}, {{stick: {{radius: 0.15}}, sphere: {{scale: 0.3}}}});
             viewer.zoomTo();
             viewer.animate({{loop: "backAndForth", step: 1, interval: 100}});

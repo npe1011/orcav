@@ -1,11 +1,11 @@
 [project]
 name = "orcav"
-version = "1.0.0"
+version = "0.5.0"
 description = "ORCA Output Viewer for parsing and visualizing ORCA logs."
 readme = "README.md"
 requires-python = ">=3.12"
 authors = [
-    { name = "Yoshino" }
+    { name = "Tatsuhiko Yoshino" }
 ]
 license = { file = "LICENSE" }
 dependencies = [

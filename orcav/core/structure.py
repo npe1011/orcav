@@ -1,7 +1,7 @@
 import os
 import copy
 from pathlib import Path
-from decimal import Decimal
+from decimal import Decimal, InvalidOperation
 from typing import List, Tuple
 
 import numpy as np
@@ -17,8 +17,8 @@ class Structure:
                 continue
             try:
                 atom, x, y, z, *_ = line.strip().split()
-            except:
-                raise ValueError('Error reading structure line:', line.strip())
+            except (ValueError, IndexError):
+                raise ValueError(f'Error reading structure line: {line.strip()}')
             atom = atom.strip().capitalize()
             x = Decimal(x.strip())
             y = Decimal(y.strip())
@@ -60,7 +60,7 @@ class Structure:
         assert coordinates.shape == (self.num_atom, 3)
         new_atom_coordinates = []
         for line in coordinates:
-            new_atom_coordinates.append([Decimal(line[0]), Decimal(line[1]), Decimal(line[2])])
+            new_atom_coordinates.append((Decimal(str(float(line[0]))), Decimal(str(float(line[1]))), Decimal(str(float(line[2])))))
         self.coordinates = new_atom_coordinates
 
     def save_xyz_file(self, file: os.PathLike, title: str =''):
@@ -117,7 +117,7 @@ class Structure:
                 eline = data[i+1]
                 try:
                     energy = Decimal(eline.strip().split()[-1])
-                except:
+                except (ValueError, IndexError, InvalidOperation):
                     energy = Decimal('0.0')
                 energy_list.append(energy)
                 i = i + 2 + num_atoms

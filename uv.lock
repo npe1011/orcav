@@ -360,7 +360,7 @@ wheels = [
 
 [[package]]
 name = "orcav"
-version = "1.0.0"
+version = "0.5.0"
 source = { virtual = "." }
 dependencies = [
     { name = "matplotlib" },
