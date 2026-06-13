@@ -11,5 +11,4 @@ if %ERRORLEVEL% neq 0 (
     exit /b 1
 )
 
-:: GUIアプリとして非同期起動（pythonwを使用）し、このコマンドプロンプト画面は即座に閉じる
-start "" uv run pythonw run.py
+powershell -WindowStyle Hidden -Command "Start-Process uv -ArgumentList 'run', 'pythonw', 'run.py' -WindowStyle Hidden"
