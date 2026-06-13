@@ -11,10 +11,4 @@ if %ERRORLEVEL% neq 0 (
     exit /b 1
 )
 
-echo ORCAV を起動しています...
 uv run run.py
-if %ERRORLEVEL% neq 0 (
-    echo.
-    echo エラーが発生しました。
-    pause
-)

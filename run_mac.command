@@ -11,10 +11,4 @@ if ! command -v uv &> /dev/null; then
     exit 1
 fi
 
-echo "ORCAV を起動しています..."
 uv run run.py
-if [ $? -ne 0 ]; then
-    echo ""
-    echo "エラーが発生しました。エンターキーを押して終了してください。"
-    read
-fi
