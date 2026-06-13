@@ -1,0 +1,18 @@
+[project]
+name = "orcav"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "matplotlib>=3.11.0",
+    "numpy>=2.4.6",
+    "pyside6>=6.11.1",
+    "pytest>=9.0.3",
+]
+
+[dependency-groups]
+dev = [
+    "pip-licenses>=5.5.5",
+    "pyinstaller>=6.20.0",
+]
