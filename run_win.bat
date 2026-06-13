@@ -11,4 +11,5 @@ if %ERRORLEVEL% neq 0 (
     exit /b 1
 )
 
-uv run run.py
+:: GUIアプリとして非同期起動（pythonwを使用）し、このコマンドプロンプト画面は即座に閉じる
+start "" uv run pythonw run.py
