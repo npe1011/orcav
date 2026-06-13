@@ -1,5 +1,5 @@
 # -*- mode: python ; coding: utf-8 -*-
-
+import sys
 
 a = Analysis(
     ['run.py'],
