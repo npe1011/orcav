@@ -11,4 +11,4 @@ if %ERRORLEVEL% neq 0 (
     exit /b 1
 )
 
-powershell -WindowStyle Hidden -Command "Start-Process uv -ArgumentList 'run', 'pythonw', 'run.py' -WindowStyle Hidden"
+powershell -WindowStyle Hidden -Command "Start-Process uv -ArgumentList 'run', 'pythonw', 'orcav/app.py' -WindowStyle Hidden"

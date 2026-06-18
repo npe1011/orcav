@@ -11,4 +11,6 @@ if ! command -v uv &> /dev/null; then
     exit 1
 fi
 
-uv run run.py
+nohup uv run python orcav/app.py > /dev/null 2>&1 &
+
+osascript -e 'tell application "Terminal" to close first window' & exit
