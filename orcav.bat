@@ -11,4 +11,6 @@ if %ERRORLEVEL% neq 0 (
     exit /b 1
 )
 
+uv sync
+
 powershell -WindowStyle Hidden -Command "Start-Process uv -ArgumentList 'run', 'pythonw', 'orcav/app.py' -WindowStyle Hidden"
