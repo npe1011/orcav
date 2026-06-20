@@ -1,6 +1,6 @@
 [project]
 name = "orcav"
-version = "0.5.0"
+version = "0.5.1"
 description = "ORCA Output Viewer for parsing and visualizing ORCA logs."
 readme = "README.md"
 requires-python = ">=3.12"
@@ -17,8 +17,7 @@ dependencies = [
 
 [dependency-groups]
 dev = [
-    "pip-licenses>=5.5.5",
-    "pyinstaller>=6.20.0",
+    "pip-licenses>=5.5.5"
 ]
 
 [tool.uv]
